@@ -12,7 +12,7 @@ var CSS_NAME        = "[name].css";
 
 var options = {
     entry: [
-        './src/main'
+        './index.js'
     ],
     output: {
         filename:   JS_NAME,
@@ -36,7 +36,22 @@ var options = {
             test:    /\.json$/,
             loader:  "json-loader",
             include: path.join(__dirname, STATIC_PATH)
-        }]
+        }, {
+          test: /\.(png|jpg|gif)$/, 
+          loader: 'url-loader?limit=819200'
+      },
+      {
+          test: /\.js$/,
+          exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
+          loader: 'babel'
+      },
+      {   test: /\.css$/, 
+          loader: 'style-loader!css-loader?sourceMap' 
+      },
+      { 
+          test: /\.(woff|svg|eot|ttf)\??.*$/,
+          loader: 'url-loader?limit=50000&name=[path][name].[ext]'
+      }]
     },
     devServer: {
         port:               HOT_SERVER_PORT,
